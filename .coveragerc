@@ -1,0 +1,5 @@
+[run]
+include = last_man_standing/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
