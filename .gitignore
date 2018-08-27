@@ -273,3 +273,7 @@ last_man_standing/media/
 .env
 .envs/*
 !.envs/.local/
+
+
+# local todo file
+todo
