@@ -33,6 +33,7 @@ class NFLGame(models.Model):
         NFLTeam, models.PROTECT, related_name="home_games")
     away_team = models.ForeignKey(
         NFLTeam, models.PROTECT, related_name="away_games")
+    # TODO what is season_type???
     season_type = models.IntegerField()
     week = models.IntegerField()
     scheduled_start_time = models.DateTimeField()
