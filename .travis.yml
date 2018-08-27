@@ -6,7 +6,7 @@ python:
   - "3.6"
 
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.8.0
   - COMPOSE_FILE=local.yml  # TODO test specific docker file?
 
 before_install:
