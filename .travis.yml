@@ -17,4 +17,4 @@ before_install:
   - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
 
 script:
-  - make runtests
+  - pytest
