@@ -7,6 +7,10 @@ A web app for football picks, last man standing style.
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django
 
+.. image:: https://travis-ci.org/carlps/last_man_standing.svg?branch=master
+     :target: https://travis-ci.org/carlps/last_man_standing
+     :alt: Build Status
+
 
 :License: MIT
 
