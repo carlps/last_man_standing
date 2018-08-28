@@ -9,12 +9,13 @@ services:
   - postgresql
 
 env:
-  - POSTGRES_USER=postgres
-  - POSTGRES_PASSWORD=""
-  - POSTGRES_HOST="localhost"
-  - POSTGRES_PORT=5432
-  - POSTGRES_DB="last_man_standing_test
-  - DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+  global:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=""
+    - POSTGRES_HOST="localhost"
+    - POSTGRES_PORT=5432
+    - POSTGRES_DB="last_man_standing_test
+    - DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 
 before_install:
   - sudo apt-get update -qq
