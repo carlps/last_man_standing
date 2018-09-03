@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}League: {{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      {% if object.is_public %}
+        <h2>{{ object.name }} (Public League)</h2>
+      {% else %}
+        <h2>{{ object.name }} (Private League)</h2>
+      {% endif %}
+      <h3>Owner: {{ object.owner }}</h3>
+      {% if object.passphrase %}
+        <div>League passphrase: {{ object.passphrase }}</div>
+      {% else %}
+        <div>League is not password protected.</div>
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock content %}

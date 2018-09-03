@@ -1,7 +1,9 @@
 from datetime import time
 
+from django import forms
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 from last_man_standing.nfl.models import Season
 
@@ -11,8 +13,17 @@ class League(models.Model):
     Represents a league playing a season of last man standing.
     Made up of teams, rules and an owner.
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.PROTECT)
+    IS_PUBLIC_CHOICES = ((True, "Public"), (False, "Private"))
+    is_public = models.BooleanField(
+        default=True, choices=IS_PUBLIC_CHOICES)
+    # passphrase is only needed if is_public==False
+    passphrase = models.CharField(null=True, max_length=100, default=None)
+    slug = models.SlugField(max_length=100, unique=True)
+
+    def get_absolute_url(self):
+        return reverse("leagues:detail", kwargs={"slug": self.slug})
 
 
 class LeagueRules(models.Model):
