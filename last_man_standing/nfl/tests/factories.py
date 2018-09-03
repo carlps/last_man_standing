@@ -1,3 +1,4 @@
+import datetime
 from random import randint
 
 from factory import DjangoModelFactory, Faker, SubFactory
@@ -7,7 +8,26 @@ from last_man_standing.nfl.models import (
     NFLDivision,
     NFLConference,
     NFLGame,
+    Season,
+    Week,
     )
+
+
+class SeasonFactory(DjangoModelFactory):
+    class Meta:
+        model = Season
+
+    year = 2018
+    season_start_date = datetime.date(year=2018, month=9, day=6)
+    season_end_date = datetime.date(year=2018, month=12, day=30)
+
+
+class WeekFactory(DjangoModelFactory):
+    class Meta:
+        model = Week
+
+    week_number = 1
+    season = SubFactory(SeasonFactory)
 
 
 class NFLConferenceFactory(DjangoModelFactory):
@@ -37,6 +57,8 @@ class NFLTeamFactory(DjangoModelFactory):
     # TODO -- fake wins/losses based on week?
     wins = randint(0, 16)
     losses = randint(0, 16)
+    season = SubFactory(SeasonFactory)
+    is_active = True
 
 
 class NFLGameFactory(DjangoModelFactory):
@@ -45,8 +67,7 @@ class NFLGameFactory(DjangoModelFactory):
 
     home_team = SubFactory(NFLTeamFactory)
     away_team = SubFactory(NFLTeamFactory)
-    season_type = 1
-    week = randint(0, 16)
+    week = SubFactory(WeekFactory)
     scheduled_start_time = Faker('date_time')
     home_score = randint(0, 100)
     away_score = randint(0, 100)

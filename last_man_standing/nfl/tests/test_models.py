@@ -5,9 +5,22 @@ from last_man_standing.nfl.tests.factories import (
     NFLGameFactory,
     NFLConferenceFactory,
     NFLDivisionFactory,
+    SeasonFactory,
     )
 
 pytestmark = pytest.mark.django_db
+
+
+class TestSeason:
+    def test_season_unicode(self):
+        season = SeasonFactory(year=2018)
+        desired_season_unicode = "2018 Season"
+        assert season.__unicode__() == desired_season_unicode
+
+    def test_season_str(self):
+        season = SeasonFactory()
+        desired_season_str = f"{season.year} Season"
+        assert season.__str__() == desired_season_str
 
 
 class TestNFLTeam:

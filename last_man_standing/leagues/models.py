@@ -3,6 +3,8 @@ from datetime import time
 from django.conf import settings
 from django.db import models
 
+from last_man_standing.nfl.models import Season
+
 
 class League(models.Model):
     """
@@ -11,14 +13,6 @@ class League(models.Model):
     """
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.PROTECT)
-
-
-class Season(models.Model):
-    """
-    For now just a year, but may be more in the future.
-    A ruleset is limited to a league in one season.
-    """
-    year = models.IntegerField()
 
 
 class LeagueRules(models.Model):

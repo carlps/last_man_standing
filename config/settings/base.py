@@ -73,6 +73,7 @@ LOCAL_APPS = [
     'last_man_standing.nfl',
     'last_man_standing.leagues',
     'last_man_standing.teams',
+    'last_man_standing.picks',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
