@@ -1,21 +1,9 @@
-"""
-I want the create form to look like:
-
-League name: _______________
-League owner: [user_name]V (dropdown with users, but default to current user)
-Public: [x] (checkbox)
-Password: _______ (only required if not public
-------------
-Rules:
-Max Wrong Picks: [2]V (dropdown with 1:16)
-Max Times a Team can be Picked: [1]V (dropdown with 1:16)
-Pick Deadline: [Sunday]V [9:00 AM]V
-"""
 from django import forms
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from .models import League
+from ..nfl.models import Season
+from .models import League, LeagueRules
 
 
 class LeagueCreationForm(forms.ModelForm):
@@ -53,4 +41,11 @@ class LeagueCreationForm(forms.ModelForm):
         instance = super().save(commit=False)
         instance.slug = slugify(instance.name)
         instance.save()
+        # generate a default ruleset for new league
+        season = Season.objects.get(is_active=True)
+        rules = LeagueRules.objects.create(
+            league=instance,
+            season=season)
+        rules.save()
+
         return instance

@@ -10,6 +10,7 @@ class Season(models.Model):
     year = models.IntegerField()
     season_start_date = models.DateField()
     season_end_date = models.DateField()
+    is_active = models.BooleanField(default=True)
 
     def __unicode__(self):
         season_unicode = f"{self.year} Season"

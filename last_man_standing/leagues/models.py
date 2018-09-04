@@ -1,6 +1,5 @@
 from datetime import time
 
-from django import forms
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -31,7 +30,7 @@ class LeagueRules(models.Model):
     Each field is an actionable rule for league. Set once at
     the beginning of the season and can't be changed after.
     """
-    league = models.ForeignKey(League, models.CASCADE)
+    league = models.ForeignKey(League, models.CASCADE, related_name="rules")
     season = models.ForeignKey(Season, models.PROTECT)
     max_wrong_picks = models.IntegerField(default=2)
     max_times_a_team_can_be_picked = models.SmallIntegerField(default=2)

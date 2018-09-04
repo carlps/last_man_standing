@@ -20,6 +20,7 @@ class SeasonFactory(DjangoModelFactory):
     year = 2018
     season_start_date = datetime.date(year=2018, month=9, day=6)
     season_end_date = datetime.date(year=2018, month=12, day=30)
+    is_active = True
 
 
 class WeekFactory(DjangoModelFactory):
