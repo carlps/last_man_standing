@@ -1,4 +1,5 @@
 COMPOSE_FILE=local.yml
+PG_CONN=postgresql://RtHiwAifCztVvJQKuHNBYGNXPXyBCHzG:NLTqFxqrWx783Ol9BEuUQLeTFj5jhTwQNLNvXfGfFnzm4j2uQRJFbJvnQg9wZxgs@localhost:5432/last_man_standing
 
 help:		## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -19,3 +20,6 @@ runtests:	## run pytest
 
 djshell:	## open a django shell in docker
 	sh -c "docker-compose -f $(COMPOSE_FILE) run --rm django python manage.py shell"
+
+pgcli:		## run pgcli connected to docker db
+	pgcli $(PG_CONN)
