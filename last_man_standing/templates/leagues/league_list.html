@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Last Man Standing Leagues{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Leagues</h2>
+  {% if request.user.has_teams or request.user.owns_leagues %}
+    <div class="list-group">
+      {# TODO clean up UI #}
+      {% for league in league_list %}
+        <a class="btn btn-primary" href="{% url 'leagues:detail'  slug=league.slug%}" role="button">{{ league.name }}</a>
+      {% endfor %}
+    </div>
+  {% else %}
+  <h2>You don't have any teams or leagues.</h2>
+  {% endif %}
+  <div class="row">
+    <div class="col-sm-12">
+      {# TODO comment update url for join when that page exists! #}
+      <a class="btn btn-primary" href="{% url 'leagues:create' %}" role="button">Join a League!</a>
+      <a class="btn btn-primary" href="{% url 'leagues:create' %}" role="button">Create a League!</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

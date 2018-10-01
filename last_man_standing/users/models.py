@@ -12,3 +12,9 @@ class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
+
+    def has_teams(self):
+        return self.team_set.exists()
+
+    def owns_leagues(self):
+        return self.league_set.exists()

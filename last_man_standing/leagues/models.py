@@ -7,6 +7,16 @@ from django.urls import reverse
 from last_man_standing.nfl.models import Season
 
 
+class LeagueManager(models.Manager):
+
+    def get_all_user_leagues(self, user):
+        """
+        Returns all leagues a user owns or has team(s) in.
+        """
+        return self.filter(models.Q(owner=user) |
+                           models.Q(team__owner=user))
+
+
 class League(models.Model):
     """
     Represents a league playing a season of last man standing.
@@ -20,6 +30,8 @@ class League(models.Model):
     # passphrase is only needed if is_public==False
     passphrase = models.CharField(null=True, max_length=100, default=None)
     slug = models.SlugField(max_length=100, unique=True)
+
+    objects = LeagueManager()
 
     def get_absolute_url(self):
         return reverse("leagues:detail", kwargs={"slug": self.slug})
