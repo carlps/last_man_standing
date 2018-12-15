@@ -7,6 +7,9 @@ help:		## Show this help.
 makemigrations:	## make django migrations
 	sh -c "docker-compose -f $(COMPOSE_FILE) run --rm django python manage.py makemigrations"
 
+drymigrations:  ## Dry run of django migrations
+	sh -c "docker-compose -f $(COMPOSE_FILE) run --rm django python manage.py makemigrations --dry-run"
+
 migrate:	## run django migrations
 	sh -c "docker-compose -f $(COMPOSE_FILE) run --rm django python manage.py migrate"
 
