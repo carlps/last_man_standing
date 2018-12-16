@@ -1,14 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+    UpdateView,
+    View,
+)
 
 from .forms import LeagueCreationForm
 from .models import League, LeagueRules
 
 
-class LeagueListView(LoginRequiredMixin, ListView):
+class UserLeagueListView(LoginRequiredMixin, ListView):
 
     model = League
+    template_name = "leagues/user_league_list.html"
 
     def get_queryset(self):
         user = self.request.user
@@ -16,7 +24,7 @@ class LeagueListView(LoginRequiredMixin, ListView):
         return leagues_qs
 
 
-league_list_view = LeagueListView.as_view()
+user_league_list_view = UserLeagueListView.as_view()
 
 
 class LeagueDetailView(LoginRequiredMixin, DetailView):
@@ -50,8 +58,27 @@ class LeagueRulesUpdateView(LoginRequiredMixin, UpdateView):
         'latest_pick_accepted_day',
         'latest_pick_accepted_time',
     ]
-    # TODO -- redirect to detail slug=rules.league
-    #success_url = reverse_lazy('detail', kwargs={})
 
 
 league_rules_update_view = LeagueRulesUpdateView.as_view()
+
+
+class LeagueJoinListView(LoginRequiredMixin, ListView):
+
+    model = League
+    template_name = "leagues/league_join_list.html"
+
+
+league_join_list_view = LeagueJoinListView.as_view()
+
+
+class LeagueJoinView(LoginRequiredMixin, View):
+    def get(self, request, league_id):
+        league = League.objects.get(pk=league_id)
+        # TODO handle non-public leagues
+        if league.is_public and not league.passphrase:
+            league.users.add(request.user)
+            return HttpResponseRedirect(reverse('leagues:list'))
+
+
+league_join_view = LeagueJoinView.as_view()

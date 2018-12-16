@@ -4,12 +4,12 @@ nfl:
 
  League stuff:
   - create league form
-    - create a default rules
+    x create a default rules
     - auto generate passphrase button
   - League detail
     - show details if user in league
     - have a join button if user not in league
-    - show rules
+    x show rules
     - if admin, allow to edit rule
   - League admin (owner only page)
     - Email invite

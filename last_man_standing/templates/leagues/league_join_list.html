@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% block title %}Last Man Standing Leagues{% endblock %}
+<div class="container">
+  <h2>Public Leagues</h2>
+  <div class="list-group">
+    <ul>
+      {% for league in league_list %}
+      <li>{{ league.name }} <a class="btn btn-primary" href="{% url 'leagues:join_league' league_id=league.id %}" role="button">Join</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock content %}

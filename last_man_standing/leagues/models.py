@@ -11,10 +11,9 @@ class LeagueManager(models.Manager):
 
     def get_all_user_leagues(self, user):
         """
-        Returns all leagues a user owns or has team(s) in.
+        Returns all leagues a user is a member of.
         """
-        return self.filter(models.Q(owner=user) |
-                           models.Q(team__owner=user))
+        return self.filter(users=user)
 
 
 class League(models.Model):
@@ -23,7 +22,13 @@ class League(models.Model):
     Made up of teams, rules and an owner.
     """
     name = models.CharField(max_length=100, unique=True)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, models.PROTECT)
+    # TODO should owner be user as well?
+    owner = models.ForeignKey(
+            settings.AUTH_USER_MODEL,
+            models.PROTECT,
+            related_name='owned_league'
+            )
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     IS_PUBLIC_CHOICES = ((True, "Public"), (False, "Private"))
     is_public = models.BooleanField(
         default=True, choices=IS_PUBLIC_CHOICES)

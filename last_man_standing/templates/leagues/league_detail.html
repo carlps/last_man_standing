@@ -33,7 +33,9 @@
       </ul>
     </div>
     <div class="col-sm-12">
-      <a class="btn btn-primary" href="{% url 'leagues:rules_update' league.rules.id %}" role="button">Edit Rules</a>
+      {% if user == league.owner %}
+        <a class="btn btn-primary" href="{% url 'leagues:rules_update' league.rules.id %}" role="button">Edit Rules</a>
+      {% endif %}
     </div>
   </div>
 
