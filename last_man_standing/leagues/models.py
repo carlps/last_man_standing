@@ -42,7 +42,9 @@ class LeagueRules(models.Model):
     Each field is an actionable rule for league. Set once at
     the beginning of the season and can't be changed after.
     """
-    league = models.ForeignKey(League, models.CASCADE, related_name="rules")
+    # Eventually we will probably want to keep track of historical rules
+    # but for now it will just be OneToOne
+    league = models.OneToOneField(League, models.CASCADE, related_name="rules")
     season = models.ForeignKey(Season, models.PROTECT)
     max_wrong_picks = models.IntegerField(default=2)
     max_times_a_team_can_be_picked = models.SmallIntegerField(default=2)
@@ -61,3 +63,7 @@ class LeagueRules(models.Model):
 
     # TODO: Timezone?
     latest_pick_accepted_time = models.TimeField(default=time(hour=9))
+
+    def get_absolute_url(self):
+        # rules should be shown with league detail (for now)
+        return reverse('leagues:detail', kwargs={'slug': self.league.slug})

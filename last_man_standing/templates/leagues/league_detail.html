@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}League: {{ object.name }}{% endblock %}
+{% block title %}League: {{ league.name }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -9,19 +9,33 @@
   <div class="row">
     <div class="col-sm-12">
 
-      {% if object.is_public %}
-        <h2>{{ object.name }} (Public League)</h2>
+      {% if league.is_public %}
+        <h2>{{ league.name }} (Public League)</h2>
       {% else %}
-        <h2>{{ object.name }} (Private League)</h2>
+        <h2>{{ league.name }} (Private League)</h2>
       {% endif %}
-      <h3>Owner: {{ object.owner }}</h3>
-      {% if object.passphrase %}
-        <div>League passphrase: {{ object.passphrase }}</div>
+      <h3>Owner: {{ league.owner }}</h3>
+      {% if league.passphrase %}
+        <div>League passphrase: {{ league.passphrase }}</div>
       {% else %}
         <div>League is not password protected.</div>
       {% endif %}
-      </ul>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>League Rules</h2>
+      <ul>
+        <li>Max Wrong Picks: <strong>{{ league.rules.max_wrong_picks }}</strong></li>
+        <li>Max Times a Team can be Picked: <strong>{{ league.rules.max_times_a_team_can_be_picked }}</strong></li>
+        <li>Last Pick Accepted on: <strong>{{ league.rules.get_latest_pick_accepted_day_display }}</strong> at <strong>{{ league.rules.latest_pick_accepted_time }}</strong></li>
+      </ul>
+    </div>
+    <div class="col-sm-12">
+      <a class="btn btn-primary" href="{% url 'leagues:rules_update' league.rules.id %}" role="button">Edit Rules</a>
+    </div>
+  </div>
+
 </div>
 {% endblock content %}
