@@ -68,17 +68,30 @@ class LeagueJoinListView(LoginRequiredMixin, ListView):
     model = League
     template_name = "leagues/league_join_list.html"
 
+    def get_queryset(self):
+        user = self.request.user
+        # only show public leagues user isn't already in
+        public_leagues_qs = League.objects.filter(
+            is_public=True,
+        ).exclude(
+            users=user,
+        )
+        return public_leagues_qs
+
 
 league_join_list_view = LeagueJoinListView.as_view()
 
 
 class LeagueJoinView(LoginRequiredMixin, View):
-    def get(self, request, league_id):
+    def get(self, request, league_id, passphrase=None):
         league = League.objects.get(pk=league_id)
         # TODO handle non-public leagues
-        if league.is_public and not league.passphrase:
+        if league.passphrase == passphrase:
             league.users.add(request.user)
             return HttpResponseRedirect(reverse('leagues:list'))
+        else:
+            # TODO
+            pass
 
 
 league_join_view = LeagueJoinView.as_view()

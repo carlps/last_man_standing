@@ -6,11 +6,17 @@
 <div class="container">
   <h2>Public Leagues</h2>
   <div class="list-group">
+    {% if league_list %}
     <ul>
       {% for league in league_list %}
       <li>{{ league.name }} <a class="btn btn-primary" href="{% url 'leagues:join_league' league_id=league.id %}" role="button">Join</a></li>
       {% endfor %}
     </ul>
+    {% else %}
+    <div>
+      No public leagues available. Join a private league or create a new one!
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock content %}

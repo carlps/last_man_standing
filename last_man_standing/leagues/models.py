@@ -41,6 +41,15 @@ class League(models.Model):
     def get_absolute_url(self):
         return reverse("leagues:detail", kwargs={"slug": self.slug})
 
+    def add_owner(self, user):
+        """
+        When a user creates a league, they should be the owner as well as a
+        user in the league.
+        """
+        self.owner = user
+        self.save()
+        self.users.add(user)
+
 
 class LeagueRules(models.Model):
     """

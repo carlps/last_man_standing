@@ -3,6 +3,10 @@ nfl:
   - sched
 
  League stuff:
+  - join league
+    x user can join a public no-password league
+    - passphrase public
+    - private
   - create league form
     x create a default rules
     - auto generate passphrase button

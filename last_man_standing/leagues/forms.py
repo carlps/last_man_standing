@@ -41,6 +41,9 @@ class LeagueCreationForm(forms.ModelForm):
         instance = super().save(commit=False)
         instance.slug = slugify(instance.name)
         instance.save()
+        # also add owner to users
+        instance.users.add(instance.owner)
+        instance.save()
         # generate a default ruleset for new league
         season = Season.objects.get(is_active=True)
         rules = LeagueRules.objects.create(
